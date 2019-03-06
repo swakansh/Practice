@@ -27,10 +27,10 @@ typedef vector<vi> vvi;
 typedef map<int,int> mpii;
 typedef set<int> seti;
 typedef multiset<int> mseti;
-typedef long int ii;
-typedef unsigned long int uii;
-typedef long long int ll;
-typedef unsigned long long int ull;
+typedef long int int32;
+typedef unsigned long int uint32;
+typedef long long int int64;
+typedef unsigned long long int uint64;
 #define FAST ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
 #define DEBUG(x) cout << '>' << #x << ':' << x << endl;
 #define rp(i,n) for(int i=0;i<(n);i++)
@@ -44,14 +44,32 @@ inline void set_bit(int & n, int b) { n |= two(b); }
 inline void unset_bit(int & n, int b) { n &= ~two(b); }
 inline int last_bit(int n) { return n & (-n); }
 inline int ones(int n) { int res = 0; while(n && ++res) n-=n&(-n); return res; }
-inline void check(ll & a){ a %= mod; if(a < 0) a += mod; }
 auto start = high_resolution_clock::now();
 inline void measure();
-
-
+int n;
+string ar;
+int dp[502][502];
+int solve(int i, int j){
+    if(i > j)   return 0;
+    if(i == j)  return 1;
+    if(dp[i][j] != -1)  return dp[i][j];
+    int ans = 1 + solve(i + 1, j);
+    for (int k = i + 1; k <= j; k++) {
+        if (ar[k] == ar[i]) {
+            ans = min(ans, solve(i + 1, k - 1) + solve(k, j));
+        }
+    }
+    dp[i][j] = ans;
+    return ans;
+}
 int main(){
     FAST
     //Do awesome things here
+    cin >> n;
+    memst(dp, -1);
+    cin >> ar;
+    int ans = solve(0, n - 1);
+    cout << ans << endl;
     return 0;
 }
 

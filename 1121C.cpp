@@ -48,10 +48,47 @@ inline void check(ll & a){ a %= mod; if(a < 0) a += mod; }
 auto start = high_resolution_clock::now();
 inline void measure();
 
-
+int a[1002];
+bool flag[1002];
+vector<pii> tq;
 int main(){
     FAST
     //Do awesome things here
+    int n, k;
+    cin >> n >> k;
+    rp(i, n)    cin >> a[i];
+    k = min(n, k);
+    int p = k;
+    rp(i, k)    tq.pb({a[i], i});
+    int pro = -1, ov = 0, ans = 0;
+    while(true){
+        vector<int> z;
+        int ct = 0;
+        rp(i, k){
+            if(tq[i].f > 0){
+                if(a[tq[i].s] - tq[i].f + 1 == pro && !flag[tq[i].s]){
+                    flag[tq[i].s] = true;
+                    ans++;
+                }
+                tq[i].f--;
+                if(tq[i].f == 0){
+                    z.pb(i);
+                    ct++;
+                }
+            }
+        }
+        ov += ct;
+        pro = floor(100 * ((double)ov / n) + 0.5);
+        if(ov == n) break;
+        rp(i, z.size()){
+            if(p < n){
+                tq[z[i]] = {a[p], p};
+                p++;
+            }
+            else    break;
+        }
+    }
+    cout << ans << endl;
     return 0;
 }
 

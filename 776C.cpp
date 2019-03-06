@@ -48,10 +48,44 @@ inline void check(ll & a){ a %= mod; if(a < 0) a += mod; }
 auto start = high_resolution_clock::now();
 inline void measure();
 
-
+ll ar[100002];
 int main(){
     FAST
     //Do awesome things here
+    int n, k;
+    ll sum = 0;
+    cin >> n >> k;
+    rp(i, n){
+        cin >> ar[i];
+    }
+    ll cs[100002] = {0};
+    cs[0] = ar[0];
+    fr(j, 1, n){
+        cs[j] = cs[j - 1] + ar[j];
+    }
+    sum = 1e14+2;
+    ll p = 1, ans = 0;
+    map<ll, ll> hsh;
+    hsh[0] = 1;
+    rp(i, n){
+        ll p = 1;
+        if(k == 1){
+            ans += hsh[cs[i] - 1];
+        }
+        else if(k == -1){
+            ans += hsh[cs[i] - 1];
+            ans += hsh[cs[i] + 1];
+        }
+        else{
+            while(true){
+                if(p < -sum || p > sum) break;        
+                ans += hsh[cs[i] - p];
+                p *= k;    
+            }
+        }
+        hsh[cs[i]]++;
+    }
+    cout << ans << endl;
     return 0;
 }
 

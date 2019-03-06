@@ -4,7 +4,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 using namespace std::chrono;
-#define mod 1000000007
+#define mod 1000000009
 #define mp make_pair
 #define pb push_back
 #define inf (int)1e9
@@ -48,10 +48,38 @@ inline void check(ll & a){ a %= mod; if(a < 0) a += mod; }
 auto start = high_resolution_clock::now();
 inline void measure();
 
-
+ll mod_expo(ll a, int b){
+    ll pro = 1;
+    while(b){
+        if(b & 1){
+            pro = (pro * a) % mod;
+            b--;
+        }
+        else{
+            a = (a * a) % mod;
+            b /= 2;
+        }
+    }
+    return pro;
+}
 int main(){
     FAST
     //Do awesome things here
+    int n, m, k;
+    cin >> n >> m >> k;
+    int q = n / k;
+    int r = n % k;
+    int mc = m;
+    mc -= (q * (k - 1)) + r;
+    if(mc <= 0){
+        cout << m << endl;
+    }
+    else{
+        ll ans = (((mod_expo(2, mc + 1) - 2) % mod + mod) % mod * k) % mod;
+        int rem = ((q - mc) * (k - 1)) % mod;
+        ans = ((ans + r) % mod + rem) % mod;
+        cout << ans << endl;
+    }
     return 0;
 }
 

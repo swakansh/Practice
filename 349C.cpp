@@ -48,10 +48,26 @@ inline void check(ll & a){ a %= mod; if(a < 0) a += mod; }
 auto start = high_resolution_clock::now();
 inline void measure();
 
-
+ll ar[100002];
 int main(){
     FAST
     //Do awesome things here
+    int n;
+    ll sm = 0, mx = -1;
+    cin >> n;
+    rp(i, n){
+        cin >> ar[i];
+        sm += ar[i];
+        mx = max(mx, ar[i]);
+    }
+    // cout << sm << endl;
+    sm = ceil((long double)sm / (n - 1));
+    if(sm >= mx){
+        cout << sm << endl;
+    }
+    else{
+        cout << mx << endl;
+    }
     return 0;
 }
 

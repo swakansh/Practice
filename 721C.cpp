@@ -7,7 +7,8 @@ using namespace std::chrono;
 #define mod 1000000007
 #define mp make_pair
 #define pb push_back
-#define inf (int)1e9
+#define inf (int)2e9
+#define linf (ll)1e18
 #define f first
 #define s second
 #define eps 1e-9
@@ -48,10 +49,59 @@ inline void check(ll & a){ a %= mod; if(a < 0) a += mod; }
 auto start = high_resolution_clock::now();
 inline void measure();
 
-
+vector<pair<int, int> > g[5002];
+pair<int, int> dp[5002][5002];
+int n, m, t;
+void dfs(int u){
+    if(u == n){
+       dp[u][1].f = 0;
+       dp[u][1].s = -1;
+       return; 
+    }    
+    fr(i, 2, 5002){
+        dp[u][i].f = inf;
+    }
+    for(auto p : g[u]){
+        int to = p.f;
+        int ti = p.s;
+        dfs(to);
+        fr(i, 2, 5002){
+            if(dp[to][i - 1].f != -1){
+                if(dp[u][i].f > ti + dp[to][i - 1].f){
+                    dp[u][i].f = ti + dp[to][i - 1].f;  
+                    dp[u][i].s = to;
+                }
+            }
+        }
+    }
+    fr(i, 2, 5002){
+        if(dp[u][i].f == inf)   dp[u][i].f = -1;
+    }
+}
 int main(){
     FAST
     //Do awesome things here
+    memst(dp, -1);
+    cin >> n >> m >> t;
+    rp(i, m){
+        int u, v, ti;
+        cin >> u >> v >> ti;
+        g[u].pb({v, ti});
+    }
+    dfs(1);
+    frd(i, 5001, 2){
+        if(dp[1][i].f != -1 && dp[1][i].f <= t){
+            cout << i << endl;
+            int cur = 1;
+            while(cur != -1){
+                cout << cur << " ";
+                cur = dp[cur][i].s;
+                i--;
+            }
+            cout << endl;
+            return 0;
+        }
+    }
     return 0;
 }
 

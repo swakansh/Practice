@@ -48,10 +48,25 @@ inline void check(ll & a){ a %= mod; if(a < 0) a += mod; }
 auto start = high_resolution_clock::now();
 inline void measure();
 
-
+int p[1002], s[1002], hsh[1002], ks[1002];
 int main(){
     FAST
     //Do awesome things here
+    int n, m, k;
+    cin >> n >> m >> k;
+    rp(i, n){
+        cin >> p[i];
+    }
+    rp(i, n){
+        cin >> s[i];
+        hsh[s[i]] = max(hsh[s[i]], p[i]);
+    }
+    int c = 0;
+    rp(i, k){
+        cin >> ks[i];
+        if(p[ks[i] - 1] < hsh[s[ks[i] - 1]])    c++;
+    }
+    cout << c << endl;
     return 0;
 }
 

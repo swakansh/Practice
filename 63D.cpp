@@ -48,10 +48,82 @@ inline void check(ll & a){ a %= mod; if(a < 0) a += mod; }
 auto start = high_resolution_clock::now();
 inline void measure();
 
-
+int ar[27];
+char ch[102][102];
 int main(){
     FAST
     //Do awesome things here
+    int a, b, c, d;
+    cin >> a >> b >> c >> d;
+    int n;
+    cin >> n;
+    rp(i, 102){
+        rp(j, 102){
+            ch[i][j] = '.';
+        }
+    }
+    rp(i, n){
+        cin >> ar[i];
+    }
+    int sr, sc, dir, k = 0, f, g;
+    if(b > d){
+        if(d & 1){
+            dir = -1;
+            sr = 0, sc = a + c - 1;
+        }
+        else{
+            dir = 1;
+            sr = 0, sc = 0;
+        }
+        f = 0;
+        g = a - 1;
+    }
+    else if(d >= b){
+        if(b & 1){
+            dir = 1;
+            sr = 0, sc = 0;
+        }
+        else{
+            dir = -1;
+            sr = 0, sc = a + c - 1;
+        }
+        f = a;
+        g = a + c - 1;
+    }
+    int e = min(b, d);
+    while(true){
+        if(k < n && ar[k]){    
+            // cout << sr << " " << sc << endl;    
+            ch[sr][sc] = k + 'a';
+            ar[k]--;
+        }
+        if(ar[k] == 0)  k++;
+        if(k >= n)   break;
+        //position adjustment
+        if(sr < e && (dir == -1 && sc == 0 || dir == 1 && sc == a + c - 1)){
+            sr++;
+            if(dir == -1)   dir = 1;
+            else    dir = -1;
+        }
+        else if(sr < e && ((dir == 1 && sc >= 0 && sc < a + c - 1) || ((dir == -1 && sc > 0 && sc <= a + c - 1)))){
+            sc = sc + dir;
+        }
+        else if(sr >= e && (dir == -1 && sc == f || dir == 1 && sc == g)){
+            sr++;
+            if(dir == -1)   dir = 1;
+            else    dir = -1;
+        }
+        else if(sr >= e && ((dir == 1 && sc >= f && sc < g) || ((dir == -1 && sc > f && sc <= g)))){
+            sc = sc + dir;
+        } 
+    }
+    cout << "YES" << endl;
+    rp(i, max(b, d)){
+        rp(j, a + c){
+            cout << ch[i][j];
+        }
+        cout << endl;
+    }
     return 0;
 }
 

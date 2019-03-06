@@ -8,6 +8,7 @@ using namespace std::chrono;
 #define mp make_pair
 #define pb push_back
 #define inf (int)1e9
+#define linf (ll)1e18
 #define f first
 #define s second
 #define eps 1e-9
@@ -48,10 +49,27 @@ inline void check(ll & a){ a %= mod; if(a < 0) a += mod; }
 auto start = high_resolution_clock::now();
 inline void measure();
 
-
+ll ar[300002], q;
 int main(){
     FAST
     //Do awesome things here
+    int n;
+    ll cost = 0;
+    cin >> n;
+    rp(i, n){
+        cin >> ar[i];
+        cost += ar[i];
+    }
+    sort(ar, ar + n);
+    int m;
+    cin >> m;
+    ll ans = linf;
+    rp(i, m){
+        cin >> q;
+        q--;
+        ans = cost - ar[n - q - 1];
+        cout << ans << endl;
+    }
     return 0;
 }
 

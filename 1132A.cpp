@@ -52,6 +52,18 @@ inline void measure();
 int main(){
     FAST
     //Do awesome things here
+    ll c1, c2, c3, c4;
+    cin >> c1 >> c2 >> c3 >> c4;
+    if(c3 && (!c1 || !c4))
+        cout << 0 << endl;
+    else{
+        if(c1 == c4){
+            cout << 1 << endl;
+        }
+        else{
+            cout << 0 << endl;
+        }
+    }
     return 0;
 }
 
